@@ -1485,7 +1485,6 @@ static bool rt_cache_route(struct fib_nh *nh, struct rtable *rt)
 	return ret;
 }
 
-
 void rt_del_uncached_list(struct rtable *rt)
 {
 	if (!list_empty(&rt->rt_uncached)) {

@@ -672,6 +672,7 @@ module_exit(tlan_exit);
 static void  __init tlan_eisa_probe(void)
 {
 	long	ioaddr;
+	int	rc = -ENODEV;
 	int	irq;
 	u16	device_id;
 
@@ -736,7 +737,8 @@ static void  __init tlan_eisa_probe(void)
 
 
 		/* Setup the newly found eisa adapter */
-		tlan_probe1(NULL, ioaddr, irq, 12, NULL);
+		rc = tlan_probe1(NULL, ioaddr, irq,
+				 12, NULL);
 		continue;
 
 out:

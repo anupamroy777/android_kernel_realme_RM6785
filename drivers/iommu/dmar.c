@@ -1116,7 +1116,7 @@ static int alloc_iommu(struct dmar_drhd_unit *drhd)
 
 		err = iommu_device_register(&iommu->iommu);
 		if (err)
-			goto err_sysfs;
+			goto err_unmap;
 	}
 
 	drhd->iommu = iommu;
@@ -1124,8 +1124,6 @@ static int alloc_iommu(struct dmar_drhd_unit *drhd)
 
 	return 0;
 
-err_sysfs:
-	iommu_device_sysfs_remove(&iommu->iommu);
 err_unmap:
 	unmap_iommu(iommu);
 error_free_seq_id:
