@@ -97,6 +97,7 @@
 #include <linux/simple_lmk.h>
 #include <linux/kprofiles.h>
 
+#include <linux/cpu_input_boost.h>
 #include <asm/pgtable.h>
 #include <asm/pgalloc.h>
 #include <linux/uaccess.h>
