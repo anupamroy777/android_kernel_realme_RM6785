@@ -665,10 +665,27 @@ int schedtune_cpu_boost(int cpu)
 	return bg->boost_max;
 }
 
+
 #if defined(OPLUS_FEATURE_UIFIRST) && !defined(CONFIG_MTK_TASK_TURBO)
 // XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 extern bool test_task_ux(struct task_struct *task);
 #endif /* OPLUS_FEATURE_UIFIRST */
+static inline bool schedtune_adj_ta(struct schedtune *st, struct task_struct *p)
+{
+	char name_buf[NAME_MAX + 1];
+	int adj = p->signal->oom_score_adj;
+
+	cgroup_name(st->css.cgroup, name_buf, sizeof(name_buf));
+	if (!strncmp(name_buf, "top-app", strlen("top-app"))) {
+		if ((adj == 0) && !(p->flags & PF_KTHREAD)) {
+			pr_debug("top app is %s\n", p->comm);
+			return true;
+		}
+	}
+
+	return false;
+}
+
 int schedtune_task_boost(struct task_struct *p)
 {
 	struct schedtune *st;
@@ -687,7 +704,26 @@ int schedtune_task_boost(struct task_struct *p)
 		task_boost = 60;
 	}
 #endif /* OPLUS_FEATURE_UIFIRST */
+	task_boost = st->boost || schedtune_adj_ta(st, p);
 	rcu_read_unlock();
+
+	return task_boost;
+}
+
+/*  The same as schedtune_task_boost except assuming the caller has the rcu read
+ *  lock.
+ */
+int schedtune_task_boost_rcu_locked(struct task_struct *p)
+{
+	struct schedtune *st;
+	int task_boost;
+
+	if (unlikely(!schedtune_initialized))
+		return 0;
+
+	/* Get task boost value */
+	st = task_schedtune(p);
+	task_boost = st->boost || schedtune_adj_ta(st, p);
 
 	return task_boost;
 }
