@@ -207,7 +207,7 @@ static int lm3697_chip_init(struct lm3697_bl_chip *pchip)
 		if (ret < 0)
 			goto out;
 
-		ret = regmap_write(pchip->regmap, 0x03, 0x28);    //Exponential Mapping Mode
+		ret = regmap_write(pchip->regmap, 0x03, 0x2A);    //Exponential Mapping Mode
 		if (ret < 0)
 			goto out;
 
@@ -231,7 +231,7 @@ static int lm3697_chip_init(struct lm3697_bl_chip *pchip)
 		if (ret < 0)
 			goto out;
 
-		ret = regmap_write(pchip->regmap, 0x16, 0x00);    //Exponential Mapping Mode
+		ret = regmap_write(pchip->regmap, 0x16, 0x01);    //Exponential Mapping Mode
 		if (ret < 0)
 			goto out;
 
@@ -292,7 +292,7 @@ static int lm3697_wled_update_status(struct backlight_device *bl)
 
 	if (BL_IC_KTD3136 == pchip->ic_type) {
 		if ((0<=bl->props.brightness) && (KTD3136_MAX_BRIGHTNESS>=bl->props.brightness)) {
-			pchip->brightness = backlight_ktd3136_buf[bl->props.brightness];
+			pchip->brightness = bl->props.brightness;
 		} else {
 			dev_err(&lm3697_i2c_client->dev, "%s, bl->props.brightness is out of range.\n", \
 				__func__);
@@ -345,8 +345,8 @@ static int lm3697_wled_update_status(struct backlight_device *bl)
 				goto out;
 		}
 	} else {
-		if ((0<=bl->props.brightness) && (KTD3136_MAX_BRIGHTNESS>=bl->props.brightness)) {
-			pchip->brightness = backlight_buf[bl->props.brightness];
+		if ((0<=bl->props.brightness) && (LM3697_MAX_BRIGHTNESS>=bl->props.brightness)) {
+			pchip->brightness = max(bl->props.brightness, LM3697_MIN_BRIGHTNESS);
 		} else {
 			dev_err(&lm3697_i2c_client->dev, "%s, bl->props.brightness is out of range.\n", \
 				__func__);
