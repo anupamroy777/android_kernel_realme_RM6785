@@ -560,7 +560,7 @@ static int lm3697_bl_probe(struct i2c_client *client,
 	props.type = BACKLIGHT_RAW;
 	props.brightness = 0;
 	props.max_brightness = KTD3136_MAX_BRIGHTNESS;
-	pchip->bl_dev =
+	pchip->bl_dev = 
 	    devm_backlight_device_register(&client->dev, "lm3697_wled",
 					   &client->dev, pchip, &lm3697_wled_ops,
 					   &props);

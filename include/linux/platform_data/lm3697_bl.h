@@ -280,6 +280,7 @@ struct lm3697_backlight_platform_data {
     unsigned int pwm_period;
 };
 
+
 /*
  * struct lm3697_platform_data
  * @en_gpio: GPIO for HWEN pin
