@@ -1346,7 +1346,7 @@ int clk_buf_fs_init(void)
 	/* create /sys/power/clk_buf/xxx */
 	r = sysfs_create_group(power_kobj, &clk_buf_attr_group);
 	if (r)
-		pr_notice("FAILED TO CREATE /sys/power/clk_buf (%d)\n", r);
+		pr_debug("FAILED TO CREATE /sys/power/clk_buf (%d)\n", r);
 
 	return r;
 }
@@ -1402,7 +1402,7 @@ int clk_buf_dts_map(void)
 			CLK_BUF7_CONTROLS_DESENSE = vals[6];
 		}
 	} else {
-		pr_notice("%s can't find compatible node for pmic_clock_buffer\n",
+		pr_debug("%s can't find compatible node for pmic_clock_buffer\n",
 			__func__);
 		return -1;
 	}
@@ -1410,7 +1410,7 @@ int clk_buf_dts_map(void)
 	if (node)
 		pwrap_base = of_iomap(node, 0);
 	else {
-		pr_notice("%s can't find compatible node for pwrap\n",
+		pr_debug("%s can't find compatible node for pwrap\n",
 			__func__);
 		return -1;
 	}
