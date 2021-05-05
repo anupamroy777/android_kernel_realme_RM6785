@@ -459,7 +459,7 @@
 			PS_Config_Lmt_Key_FW_Diff_P = <35>;
 			PS_Config_Lmt_Key_FW_Diff_N = <(-35)>;
 
-			PS_Config_Diff_Test_Frame = <50>;
+			PS_Config_Diff_Test_Frame = <60>;
 		};
 	};
 };
