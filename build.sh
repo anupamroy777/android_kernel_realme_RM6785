@@ -13,7 +13,7 @@ git clone --depth=1 https://github.com/sarthakroy2002/android_prebuilts_clang_ho
 git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 los-4.9-64
 git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9 los-4.9-32
 
-[ -d "out" ] && rm -rf out || mkdir -p out
+[ -d "out" ] && rm -rf AnyKernel && rm -rf out || mkdir -p out
 
 make O=out ARCH=arm64 RMX2151_defconfig
 
