@@ -1434,7 +1434,6 @@ static void hid_output_field(const struct hid_device *hid,
 				  field->value[n]);
 	}
 }
-
  /*
  * Compute the size of a report.
  */
@@ -1445,7 +1444,6 @@ static size_t hid_compute_report_size(struct hid_report *report)
 
 	return 0;
 }
-
  /*
  * Create a report. 'data' has to be allocated using
  * hid_alloc_report_buf() so that it has proper size.
