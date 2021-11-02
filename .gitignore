@@ -125,3 +125,9 @@ all.config
 
 # fetched Android config fragments
 kernel/configs/android-*.cfg
+
+/AnyKernel/                                                                
+/clang/
+/los-4.9-32/
+/los-4.9-64/
+/out/
