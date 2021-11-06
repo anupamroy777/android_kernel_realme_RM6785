@@ -6661,6 +6661,7 @@ void sched_show_task(struct task_struct *p)
 
 	printk(KERN_INFO "%-15.15s %c", p->comm, task_state_to_char(p));
 
+
 	if (p->state == TASK_RUNNING)
 		printk(KERN_CONT "  running task    ");
 #ifdef CONFIG_DEBUG_STACK_USAGE
