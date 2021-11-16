@@ -2330,8 +2330,6 @@ long _do_fork(unsigned long clone_flags,
 	  cpu_input_boost_kick_max(25);
 	} else if (task_is_zygote(current) && ((active_mode() == 3) || (active_mode() == 0))) {
 	  cpu_input_boost_kick_max(50);
-	} else if (task_is_zygote(current) && (active_mode() == 1)) {
-	  pr_info("Battery profile detected! Skipping DDR bus boost...\n");
 	}
 
 	/*
