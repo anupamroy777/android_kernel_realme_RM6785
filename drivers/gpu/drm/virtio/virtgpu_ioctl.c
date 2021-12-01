@@ -197,14 +197,10 @@ static int virtio_gpu_execbuffer_ioctl(struct drm_device *dev, void *data,
 	if (ret)
 		goto out_free;
 
-	buf = kvmalloc(exbuf->size, GFP_USER);
-	if (!buf) {
+	buf = memdup_user(u64_to_user_ptr(exbuf->command), exbuf->size);
+	if (IS_ERR(buf)) {
 		ret = PTR_ERR(buf);
 		goto out_unresv;
-	}
-	if (copy_from_user(buf, u64_to_user_ptr(exbuf->command), exbuf->size)) {
-		ret = PTR_ERR(buf);
-		goto out_memdup;
 	}
 
 	out_fence = virtio_gpu_fence_alloc(vgdev);
@@ -237,7 +233,7 @@ static int virtio_gpu_execbuffer_ioctl(struct drm_device *dev, void *data,
 	return 0;
 
 out_memdup:
-	kvfree(buf);
+	kfree(buf);
 out_unresv:
 	ttm_eu_backoff_reservation(&ticket, &validate_list);
 out_free:

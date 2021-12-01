@@ -2971,6 +2971,7 @@ retry:
 		goto out;
 
 	restart = &current->restart_block;
+	restart->fn = futex_wait_restart;
 	restart->futex.uaddr = uaddr;
 	restart->futex.val = val;
 	restart->futex.time = *abs_time;
@@ -2981,7 +2982,7 @@ retry:
 	restart->futex.uaddr2 = (u32*)(long)owner_tid;
 #endif /* OPLUS_FEATURE_UIFIRST */
 
-	ret = set_restart_fn(restart, futex_wait_restart);
+	ret = -ERESTART_RESTARTBLOCK;
 
 out:
 	if (to) {

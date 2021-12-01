@@ -53,7 +53,7 @@
 
 /* ================= Device Structure ================== */
 
-struct bcm_device_private iproc_priv;
+struct device_private iproc_priv;
 
 /* ==================== Parameters ===================== */
 

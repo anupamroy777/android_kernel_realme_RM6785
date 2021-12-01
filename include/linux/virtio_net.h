@@ -79,13 +79,8 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
 		if (gso_type && skb->network_header) {
 			struct flow_keys keys;
 
-			if (!skb->protocol) {
-				__be16 protocol = dev_parse_header_protocol(skb);
-
+			if (!skb->protocol)
 				virtio_net_hdr_set_proto(skb, hdr);
-				if (protocol && protocol != skb->protocol)
-					return -EINVAL;
-			}
 retry:
 			if (!skb_flow_dissect_flow_keys(skb, &keys, 0)) {
 				/* UFO does not specify ipv4 or 6: try both */
