@@ -13,7 +13,7 @@
 
 #$(call all-subdir-src-or-makefile)
 export MTK_PLATFORM := $(subst ",,$(CONFIG_MTK_PLATFORM))
-subdir-ccflags-y += -Werror
+subdir-ccflags-y += -Wno-void-pointer-to-int-cast
 
 ifdef CONFIG_OPLUS_FEATURE_MMCPLUS
 MMC_BUILD_FOLDER :=ommc
