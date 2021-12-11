@@ -585,7 +585,7 @@ dma_addr_t cmdq_pkt_get_curr_buf_pa(struct cmdq_pkt *pkt)
 
 	if (unlikely(!pkt->avail_buf_size))
 		if (cmdq_pkt_add_cmd_buffer(pkt) < 0)
-			return -ENOMEM;
+			return ERR_PTR(-ENOMEM);
 
 	buf = list_last_entry(&pkt->buf, typeof(*buf), list_entry);
 
@@ -599,7 +599,7 @@ int *cmdq_pkt_get_curr_buf_va(struct cmdq_pkt *pkt)
 
 	if (unlikely(!pkt->avail_buf_size))
 		if (cmdq_pkt_add_cmd_buffer(pkt) < 0)
-			return -ENOMEM;
+			return ERR_PTR(-ENOMEM);
 
 	buf = list_last_entry(&pkt->buf, typeof(*buf), list_entry);
 
