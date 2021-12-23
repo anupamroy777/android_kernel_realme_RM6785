@@ -83,6 +83,7 @@ static DEFINE_RWLOCK(binfmt_lock);
 #define HWCOMPOSER_BIN_PREFIX "/vendor/bin/hw/android.hardware.graphics.composer"
 #define ZYGOTE32_BIN "/system/bin/app_process32"
 #define ZYGOTE64_BIN "/system/bin/app_process64"
+#define FP_BIN_PREFIX "/vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service.RM6785"
 static struct signal_struct *zygote32_sig;
 static struct signal_struct *zygote64_sig;
 
@@ -1872,6 +1873,12 @@ static int do_execveat_common(int fd, struct filename *filename,
 		else if (unlikely(!strncmp(filename->name,
 					   HWCOMPOSER_BIN_PREFIX,
 					   strlen(HWCOMPOSER_BIN_PREFIX)))) {
+			current->flags |= PF_PERF_CRITICAL;
+			set_cpus_allowed_ptr(current, cpu_perf_mask);
+		}
+		else if (unlikely(!strncmp(filename->name,
+					  FP_BIN_PREFIX,
+					  strlen(FP_BIN_PREFIX)))) {
 			current->flags |= PF_PERF_CRITICAL;
 			set_cpus_allowed_ptr(current, cpu_perf_mask);
 		}
