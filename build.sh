@@ -7,7 +7,7 @@ source ~/.bashrc && source ~/.profile
 export LC_ALL=C && export USE_CCACHE=1
 ccache -M 100G
 export ARCH=arm64
-export KBUILD_BUILD_HOST=ThunderStorm
+export KBUILD_BUILD_HOST=Anupam_Roy
 export KBUILD_BUILD_USER="Gorilla669"
 git clone --depth=1 https://github.com/Kdrag0n/proton-clang.git clang
 git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 los-4.9-64
@@ -15,7 +15,7 @@ git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86
 
 [ -d "out" ] && rm -rf AnyKernel && rm -rf out || mkdir -p out
 
-make O=out ARCH=arm64 RMX2151_defconfig
+make O=out ARCH=arm64 RM6785_defconfig
 
 PATH="${PWD}/clang/bin:${PATH}:${PWD}/clang/bin:${PATH}:${PWD}/clang/bin:${PATH}" \
 make -j$(nproc --all) O=out \
