@@ -94,12 +94,18 @@ u64 notrace trace_clock_global(void)
 {
 	unsigned long flags;
 	int this_cpu;
-	u64 now;
+	u64 now, prev_time;
 
 	local_irq_save(flags);
 
 	this_cpu = raw_smp_processor_id();
 	now = sched_clock_cpu(this_cpu);
+
+
+	/* Make sure that now is always greater than or equal to prev_time */
+	if ((s64)(now - prev_time) < 0)
+		now = prev_time;
+
 	/*
 	 * If in an NMI context then dont risk lockups and return the
 	 * cpu_clock() time:
@@ -107,7 +113,12 @@ u64 notrace trace_clock_global(void)
 	if (unlikely(in_nmi()))
 		goto out;
 
-	arch_spin_lock(&trace_clock_struct.lock);
+	/* Tracing can cause strange recursion, always use a try lock */
+	if (arch_spin_trylock(&trace_clock_struct.lock)) {
+		/* Reread prev_time in case it was already updated */
+		prev_time = READ_ONCE(trace_clock_struct.prev_time);
+		if ((s64)(now - prev_time) < 0)
+			now = prev_time;
 
 	/*
 	 * TODO: if this happens often then maybe we should reset
@@ -120,6 +131,8 @@ u64 notrace trace_clock_global(void)
 	trace_clock_struct.prev_time = now;
 
 	arch_spin_unlock(&trace_clock_struct.lock);
+
+	}
 
  out:
 	local_irq_restore(flags);
