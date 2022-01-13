@@ -1,4 +1,4 @@
-CONFIG_LOCALVERSION="-ThunderStorm-1.3"
+CONFIG_LOCALVERSION="-ThunderStorm-1.4"
 CONFIG_CROSS_COMPILE="aarch64-linux-android-"
 # CONFIG_LOCALVERSION_AUTO is not set
 # CONFIG_FHANDLE is not set
