@@ -78,6 +78,16 @@ bool __refrigerator(bool check_kthr_stop)
 		if (!(current->flags & PF_FROZEN))
 			break;
 		was_frozen = true;
+
+		/*
+		 * Now we're sure that there is no pending fatal signal.
+		 * Clear TIF_SIGPENDING to not get out of schedule()
+		 * immediately (if there is a non-fatal signal pending), and
+		 * put the task into sleep.
+		 */
+		if (killable)
+			clear_thread_flag(TIF_SIGPENDING);
+
 		schedule();
 	}
 
