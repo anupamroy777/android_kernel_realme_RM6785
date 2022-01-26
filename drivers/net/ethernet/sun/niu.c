@@ -8209,8 +8209,11 @@ static void niu_pci_vpd_fetch(struct niu *np, u32 start)
 		offset += err;
 
 		err = niu_pci_vpd_scan_props(np, here, end);
-		if (err < 0 || err == 1)
-			return;
+		if (err < 0)
+			return err;
+		/* ret == 1 is not an error */
+		if (err == 1)
+			return 0;
 	}
 }
 
