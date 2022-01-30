@@ -1980,9 +1980,6 @@ static __latent_entropy struct task_struct *copy_process(
 	memset(&p->oppo_jank_info, 0, sizeof(struct oppo_jank_monitor_info));
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
-#ifdef CONFIG_OPLUS_FEATURE_FUSE_FS_SHORTCIRCUIT
-	p->fpack = NULL;
-#endif /* CONFIG_OPLUS_FEATURE_FUSE_FS_SHORTCIRCUIT */
 	/* Perform scheduler related setup. Assign this task to a CPU. */
 	retval = sched_fork(clone_flags, p);
 	if (retval)
