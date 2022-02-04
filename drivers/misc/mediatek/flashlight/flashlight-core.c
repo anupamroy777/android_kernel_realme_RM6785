@@ -90,7 +90,7 @@ static int pt_is_low(int pt_low_vol, int pt_low_bat, int pt_over_cur);
 #ifdef CONFIG_MTK_FLASHLIGHT_DLPT
 void __attribute__ ((weak)) kicker_pbm_by_flash(bool status)
 {
-	pr_info("No dlpt support\n");
+	pr_debug("No dlpt support\n");
 }
 #endif
 
@@ -110,7 +110,7 @@ static int fl_set_level(struct flashlight_dev *fdev, int level)
 	struct flashlight_dev_arg fl_dev_arg;
 
 	if (!fdev || !fdev->ops) {
-		pr_info("Failed with no flashlight ops\n");
+		pr_debug("Failed with no flashlight ops\n");
 		return -EINVAL;
 	}
 
@@ -119,7 +119,7 @@ static int fl_set_level(struct flashlight_dev *fdev, int level)
 	if (pt_is_low(pt_low_vol, pt_low_bat, pt_over_cur))
 		if (fdev->low_pt_level >= 0 && level > fdev->low_pt_level) {
 			level = fdev->low_pt_level;
-			pr_info("Set level to (%d) since pt(%d,%d,%d), pt strict(%d)\n",
+			pr_debug("Set level to (%d) since pt(%d,%d,%d), pt strict(%d)\n",
 					level, pt_low_vol, pt_low_bat,
 					pt_over_cur, pt_strict);
 		}
@@ -145,7 +145,7 @@ static int fl_enable(struct flashlight_dev *fdev, int enable)
 	struct flashlight_dev_arg fl_dev_arg;
 
 	if (!fdev || !fdev->ops) {
-		pr_info("Failed with no flashlight ops\n");
+		pr_debug("Failed with no flashlight ops\n");
 		return -EINVAL;
 	}
 
@@ -157,14 +157,14 @@ static int fl_enable(struct flashlight_dev *fdev, int enable)
 	if (pt_is_low(pt_low_vol, pt_low_bat, pt_over_cur) == 2)
 		if (enable) {
 			enable = 0;
-			pr_info("Failed to enable since pt(%d,%d,%d), pt strict(%d)\n",
+			pr_debug("Failed to enable since pt(%d,%d,%d), pt strict(%d)\n",
 					pt_low_vol, pt_low_bat,
 					pt_over_cur, pt_strict);
 		}
 #endif
 
 	if (fdev->sw_disable_status == FLASHLIGHT_SW_DISABLE_ON) {
-		pr_info("Sw disable on\n");
+		pr_debug("Sw disable on\n");
 		return 0;
 	}
 
@@ -421,7 +421,7 @@ int flashlight_dev_register(
 				continue;
 			}
 
-			pr_info("%s %d %d %d\n", flashlight_id[i].name,
+			pr_debug("%s %d %d %d\n", flashlight_id[i].name,
 					type_index, ct_index, part_index);
 
 			mutex_lock(&fl_mutex);
@@ -465,7 +465,7 @@ int flashlight_dev_unregister(const char *name)
 				continue;
 			}
 
-			pr_info("%s %d %d %d\n", flashlight_id[i].name,
+			pr_debug("%s %d %d %d\n", flashlight_id[i].name,
 					type_index, ct_index, part_index);
 
 			mutex_lock(&fl_mutex);
@@ -504,7 +504,7 @@ int flashlight_dev_register_by_device_id(
 		return -EINVAL;
 	}
 
-	pr_info("Register device (%d,%d,%d)\n",
+	pr_debug("Register device (%d,%d,%d)\n",
 			dev_id->type, dev_id->ct, dev_id->part);
 
 	mutex_lock(&fl_mutex);
@@ -537,7 +537,7 @@ int flashlight_dev_unregister_by_device_id(struct flashlight_device_id *dev_id)
 		return -EINVAL;
 	}
 
-	pr_info("Unregister device (%d,%d,%d)\n",
+	pr_debug("Unregister device (%d,%d,%d)\n",
 			dev_id->type, dev_id->ct, dev_id->part);
 
 	mutex_lock(&fl_mutex);
@@ -673,7 +673,7 @@ static ssize_t FL_HW_WRITE( struct file *file, const char __user *buffer, size_t
 			fl_dev_arg.arg = 0;
 			fdev->ops->flashlight_ioctl(FLASH_IOC_SET_ONOFF, (unsigned long)&fl_dev_arg);
 		} else {
-			pr_info("Failed with no flashlight ops\n");
+			pr_debug("Failed with no flashlight ops\n");
 		}
 		kdVIOPowerOn(0);
 		pr_err("sensor is poweron ,need to set flash off\n");
@@ -702,7 +702,7 @@ static ssize_t FL_HW_WRITE( struct file *file, const char __user *buffer, size_t
 		/* Shounan.Yang@Camera.Driver add for Dual channel flashlight 20190624 */
 		if (fdev->ops) {
 			fdev->ops->flashlight_set_driver(0);
-			pr_info("set driver 0");
+			pr_debug("set driver 0");
 		}
 		#endif
 		kdVIOPowerOn(0);
@@ -714,7 +714,7 @@ static ssize_t FL_HW_WRITE( struct file *file, const char __user *buffer, size_t
 			#ifdef OPLUS_FEATURE_CAMERA_COMMON
 			/* Shounan.Yang@Camera.Driver add for Dual channel flashlight 20190624 */
 			fdev->ops->flashlight_set_driver(1);
-			pr_info("regBuf[0] == '1'set driver 1");
+			pr_debug("regBuf[0] == '1'set driver 1");
 			#endif
 			fl_dev_arg.arg = 1;
 			fdev->ops->flashlight_ioctl(FLASH_IOC_SET_DUTY, (unsigned long)&fl_dev_arg);
@@ -773,7 +773,7 @@ static int flashlight_update_charger_status(struct flashlight_dev *fdev)
 	struct flashlight_dev_arg fl_dev_arg;
 
 	if (!fdev || !fdev->ops) {
-		pr_info("Failed with no flashlight ops\n");
+		pr_debug("Failed with no flashlight ops\n");
 		return -EINVAL;
 	}
 
@@ -781,7 +781,7 @@ static int flashlight_update_charger_status(struct flashlight_dev *fdev)
 	fl_dev_arg.channel = fdev->dev_id.channel;
 	if (fdev->ops->flashlight_ioctl(FLASH_IOC_IS_CHARGER_READY,
 				(unsigned long)&fl_dev_arg))
-		pr_info("Failed to get charger status\n");
+		pr_debug("Failed to get charger status\n");
 	else
 		fdev->charger_status = fl_dev_arg.arg;
 
@@ -866,11 +866,11 @@ static int pt_trigger(void)
 			fdev->ops->flashlight_open();
 			fdev->ops->flashlight_set_driver(1);
 			if (pt_strict) {
-				pr_info("PT trigger(%d,%d,%d) disable flashlight\n",
+				pr_debug("PT trigger(%d,%d,%d) disable flashlight\n",
 					pt_low_vol, pt_low_bat, pt_over_cur);
 				fl_enable(fdev, 0);
 			} else {
-				pr_info("PT trigger(%d,%d,%d) decrease duty: %d\n",
+				pr_debug("PT trigger(%d,%d,%d) decrease duty: %d\n",
 					pt_low_vol, pt_low_bat,
 					pt_over_cur, fdev->low_pt_level);
 				fl_set_level(fdev, fdev->low_pt_level);
