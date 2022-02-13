@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.14.264 Kernel Configuration
+# Linux/arm64 4.14.266 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -1425,7 +1425,7 @@ CONFIG_MTK_GPT_SCHEME_SUPPORT=y
 # Storage Block Tag
 #
 CONFIG_MTK_BLOCK_TAG=y
-CONFIG_MTK_IO_BOOST=y
+# CONFIG_MTK_IO_BOOST is not set
 CONFIG_MTK_PID_MAP=y
 
 #
