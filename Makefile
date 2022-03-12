@@ -747,15 +747,7 @@ else
 KBUILD_CFLAGS   += -O3
 endif
 
-# Enable Clang Polly optimizations
-KBUILD_CFLAGS	+= -mllvm -polly \
-		   -mllvm -polly-run-dce \
-		   -mllvm -polly-run-inliner \
-		   -mllvm -polly-opt-fusion=max \
-		   -mllvm -polly-ast-use-context \
-		   -mllvm -polly-detect-keep-going \
-		   -mllvm -polly-vectorizer=stripmine \
-		   -mllvm -polly-invariant-load-hoisting
+
 # Tell compiler to tune the performance of the code for a specified
 # target processor
 ifeq ($(cc-name),gcc)
