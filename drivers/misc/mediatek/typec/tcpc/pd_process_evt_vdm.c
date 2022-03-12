@@ -538,7 +538,7 @@ static inline void print_vdm_msg(
 #if (PE_EVT_INFO_VDM_DIS == 0)
 	uint8_t cmd;
 	uint8_t cmd_type;
-	uint16_t svid;
+	uint16_t __maybe_unused svid;
 	const char *name = NULL;
 	uint32_t vdm_hdr = pd_port->curr_vdm_hdr;
 
