@@ -9,7 +9,7 @@ ccache -M 100G
 export ARCH=arm64
 export KBUILD_BUILD_HOST=Anupam_Roy
 export KBUILD_BUILD_USER="Gorilla669"
-git clone --depth=1 https://github.com/vijaymalav564/vortex-clang.git clang
+git clone --depth=1 https://gitlab.com/Panchajanya1999/azure-clang.git clang
 
 [ -d "out" ] && rm -rf AnyKernel && rm -rf out || mkdir -p out
 
