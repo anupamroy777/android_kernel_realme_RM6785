@@ -157,7 +157,7 @@ static void toprgu_register_reset_controller(struct device_node *np,
 
 	ret = reset_controller_register(&data->rcdev);
 	if (ret) {
-		pr_info("could not register toprgu reset controller: %d\n",
+		pr_debug("could not register toprgu reset controller: %d\n",
 			 ret);
 		kfree(data);
 		return;
@@ -302,19 +302,19 @@ void mtk_wdt_restart(enum wd_restart_type type)
 
 void wdt_dump_reg(void)
 {
-	pr_info("****************dump wdt reg start*************\n");
-	pr_info("MTK_WDT_MODE:0x%x\n", __raw_readl(MTK_WDT_MODE));
-	pr_info("MTK_WDT_LENGTH:0x%x\n", __raw_readl(MTK_WDT_LENGTH));
-	pr_info("MTK_WDT_RESTART:0x%x\n", __raw_readl(MTK_WDT_RESTART));
-	pr_info("MTK_WDT_STATUS:0x%x\n", __raw_readl(MTK_WDT_STATUS));
-	pr_info("MTK_WDT_INTERVAL:0x%x\n", __raw_readl(MTK_WDT_INTERVAL));
-	pr_info("MTK_WDT_SWRST:0x%x\n", __raw_readl(MTK_WDT_SWRST));
-	pr_info("MTK_WDT_NONRST_REG:0x%x\n", __raw_readl(MTK_WDT_NONRST_REG));
-	pr_info("MTK_WDT_NONRST_REG2:0x%x\n", __raw_readl(MTK_WDT_NONRST_REG2));
-	pr_info("MTK_WDT_REQ_MODE:0x%x\n", __raw_readl(MTK_WDT_REQ_MODE));
-	pr_info("MTK_WDT_REQ_IRQ_EN:0x%x\n", __raw_readl(MTK_WDT_REQ_IRQ_EN));
-	pr_info("MTK_WDT_DRAMC_CTL:0x%x\n", __raw_readl(MTK_WDT_DRAMC_CTL));
-	pr_info("****************dump wdt reg end*************\n");
+	pr_debug("****************dump wdt reg start*************\n");
+	pr_debug("MTK_WDT_MODE:0x%x\n", __raw_readl(MTK_WDT_MODE));
+	pr_debug("MTK_WDT_LENGTH:0x%x\n", __raw_readl(MTK_WDT_LENGTH));
+	pr_debug("MTK_WDT_RESTART:0x%x\n", __raw_readl(MTK_WDT_RESTART));
+	pr_debug("MTK_WDT_STATUS:0x%x\n", __raw_readl(MTK_WDT_STATUS));
+	pr_debug("MTK_WDT_INTERVAL:0x%x\n", __raw_readl(MTK_WDT_INTERVAL));
+	pr_debug("MTK_WDT_SWRST:0x%x\n", __raw_readl(MTK_WDT_SWRST));
+	pr_debug("MTK_WDT_NONRST_REG:0x%x\n", __raw_readl(MTK_WDT_NONRST_REG));
+	pr_debug("MTK_WDT_NONRST_REG2:0x%x\n", __raw_readl(MTK_WDT_NONRST_REG2));
+	pr_debug("MTK_WDT_REQ_MODE:0x%x\n", __raw_readl(MTK_WDT_REQ_MODE));
+	pr_debug("MTK_WDT_REQ_IRQ_EN:0x%x\n", __raw_readl(MTK_WDT_REQ_IRQ_EN));
+	pr_debug("MTK_WDT_DRAMC_CTL:0x%x\n", __raw_readl(MTK_WDT_DRAMC_CTL));
+	pr_debug("****************dump wdt reg end*************\n");
 }
 
 void wdt_arch_reset(char mode)

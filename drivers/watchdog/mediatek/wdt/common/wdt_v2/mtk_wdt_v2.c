@@ -519,7 +519,7 @@ void mtk_wd_resume(void)
 			wdt_sta_val &= ~MTK_WDT_NONRST2_SUSPEND_DIS;
 			mt_reg_sync_writel(wdt_sta_val, MTK_WDT_NONRST_REG2);
 		} else
-			pr_info("%s without change mode setting %x",
+			pr_debug("%s without change mode setting %x",
 				 __func__, wdt_sta_val);
 
 		mtk_wdt_restart(WD_TYPE_NORMAL);
@@ -533,32 +533,32 @@ void wdt_dump_reg(void)
 {
 	int i;
 
-	pr_info("****************dump wdt reg start*************\n");
-	pr_info("MTK_WDT_MODE:0x%x\n", __raw_readl(MTK_WDT_MODE));
-	pr_info("MTK_WDT_LENGTH:0x%x\n", __raw_readl(MTK_WDT_LENGTH));
-	pr_info("MTK_WDT_RESTART:0x%x\n", __raw_readl(MTK_WDT_RESTART));
-	pr_info("MTK_WDT_STATUS:0x%x\n", __raw_readl(MTK_WDT_STATUS));
-	pr_info("MTK_WDT_INTERVAL:0x%x\n", __raw_readl(MTK_WDT_INTERVAL));
-	pr_info("MTK_WDT_SWRST:0x%x\n", __raw_readl(MTK_WDT_SWRST));
-	pr_info("MTK_WDT_NONRST_REG:0x%x\n", __raw_readl(MTK_WDT_NONRST_REG));
-	pr_info("MTK_WDT_NONRST_REG2:0x%x\n",
+	pr_debug("****************dump wdt reg start*************\n");
+	pr_debug("MTK_WDT_MODE:0x%x\n", __raw_readl(MTK_WDT_MODE));
+	pr_debug("MTK_WDT_LENGTH:0x%x\n", __raw_readl(MTK_WDT_LENGTH));
+	pr_debug("MTK_WDT_RESTART:0x%x\n", __raw_readl(MTK_WDT_RESTART));
+	pr_debug("MTK_WDT_STATUS:0x%x\n", __raw_readl(MTK_WDT_STATUS));
+	pr_debug("MTK_WDT_INTERVAL:0x%x\n", __raw_readl(MTK_WDT_INTERVAL));
+	pr_debug("MTK_WDT_SWRST:0x%x\n", __raw_readl(MTK_WDT_SWRST));
+	pr_debug("MTK_WDT_NONRST_REG:0x%x\n", __raw_readl(MTK_WDT_NONRST_REG));
+	pr_debug("MTK_WDT_NONRST_REG2:0x%x\n",
 		__raw_readl(MTK_WDT_NONRST_REG2));
-	pr_info("MTK_WDT_REQ_MODE:0x%x\n", __raw_readl(MTK_WDT_REQ_MODE));
-	pr_info("MTK_WDT_REQ_IRQ_EN:0x%x\n", __raw_readl(MTK_WDT_REQ_IRQ_EN));
-	pr_info("MTK_WDT_EXT_REQ_CON:0x%x\n",
+	pr_debug("MTK_WDT_REQ_MODE:0x%x\n", __raw_readl(MTK_WDT_REQ_MODE));
+	pr_debug("MTK_WDT_REQ_IRQ_EN:0x%x\n", __raw_readl(MTK_WDT_REQ_IRQ_EN));
+	pr_debug("MTK_WDT_EXT_REQ_CON:0x%x\n",
 		__raw_readl(MTK_WDT_EXT_REQ_CON));
-	pr_info("MTK_WDT_DEBUG_CTL:0x%x\n", __raw_readl(MTK_WDT_DEBUG_CTL));
-	pr_info("MTK_WDT_LATCH_CTL:0x%x\n", __raw_readl(MTK_WDT_LATCH_CTL));
-	pr_info("MTK_WDT_DEBUG_CTL2:0x%x\n", __raw_readl(MTK_WDT_DEBUG_CTL2));
-	pr_info("MTK_WDT_COUNTER:0x%x\n", __raw_readl(MTK_WDT_COUNTER));
-	pr_info("MTK_WDT_LAST_KICKED\n");
+	pr_debug("MTK_WDT_DEBUG_CTL:0x%x\n", __raw_readl(MTK_WDT_DEBUG_CTL));
+	pr_debug("MTK_WDT_LATCH_CTL:0x%x\n", __raw_readl(MTK_WDT_LATCH_CTL));
+	pr_debug("MTK_WDT_DEBUG_CTL2:0x%x\n", __raw_readl(MTK_WDT_DEBUG_CTL2));
+	pr_debug("MTK_WDT_COUNTER:0x%x\n", __raw_readl(MTK_WDT_COUNTER));
+	pr_debug("MTK_WDT_LAST_KICKED\n");
 	for (i = 0; i < MTK_WDT_KEEP_LAST_INFO; i++) {
 		if (wdt_kick_info[i].restart_caller)
 			pr_info("<%d>[%lld] %pF\n", wdt_kick_info[i].cpu,
 				wdt_kick_info[i].restart_time,
 				wdt_kick_info[i].restart_caller);
 	}
-	pr_info("****************dump wdt reg end*************\n");
+	pr_debug("****************dump wdt reg end*************\n");
 
 }
 
