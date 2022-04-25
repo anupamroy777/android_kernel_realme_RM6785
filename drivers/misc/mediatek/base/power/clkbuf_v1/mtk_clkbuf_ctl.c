@@ -28,7 +28,7 @@ bool is_clkbuf_initiated;
 /* false: rf_clkbuf, true: pmic_clkbuf */
 bool is_pmic_clkbuf = true;
 
-bool clkbuf_debug;
+bool clkbuf_debug = 0;
 static bool g_is_flightmode_on;
 unsigned int bblpm_cnt;
 
