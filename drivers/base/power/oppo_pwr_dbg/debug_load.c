@@ -316,14 +316,9 @@ static void debug_power_timer_func(unsigned long data)
 		cpu_freq = cpufreq_quick_get(cpu) / 1000;
 		ts = tick_get_tick_sched(cpu);
 		sched_get_percpu_load2(cpu, 0, &load_rel, &load_abs);
-		POWER_TUNER_INFO("cpu_info(%d): %d(idle)\t%dMhz\t%u(rel)\t%u(abs)\t%d(util)\t%d(cap)\n",
-			cpu, ts->idle_active, cpu_freq, load_rel, load_abs, boosted_cpu_util(cpu), get_capacity_ac_freq(cpu, cpu_freq));
 	}
-	POWER_TUNER_INFO("gpu_dram_info %uMhz(gpu)\t%d(gpu_load)\t%d(ddr opp)\t%d(vcore opp)\t%d(uv)\n",
-		gpu_freq, gpu_load, get_cur_ddr_opp(), get_cur_vcore_opp(), get_cur_vcore_uv());
 
 	task_power_stats();
-	POWER_TUNER_INFO("print active wakeup sources\n");
 	pm_print_active_wakeup_sources();
 	mod_timer(&power_debug_info.debug_power_timer, jiffies + debug_power_timer_interval_s * HZ);
 
