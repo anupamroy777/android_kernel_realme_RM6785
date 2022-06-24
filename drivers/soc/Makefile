@@ -34,9 +34,6 @@ obj-$(CONFIG_OPPO_ARCH_FILE)	+= oppo/
 obj-$(CONFIG_OPPO_ARCH_FILE)    += oppo/
 #endif /*OPLUS_FEATURE_TP_BASIC*/
 
-#ifdef OPLUS_FEATURE_IOMONITOR
-obj-$(CONFIG_IOMONITOR)    +=  oplus/iomonitor/
-#endif /*OPLUS_FEATURE_IOMONITOR*/
 
 #ifdef OPLUS_FEATURE_TP_BASIC
 #wen.luo@BSP.Kernel.Stability 2020/03/25 add for oplus kernel system

@@ -154,12 +154,6 @@ struct request {
 	int cpu;
 	unsigned int cmd_flags;		/* op and common flags */
 	req_flags_t rq_flags;
-#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
-	ktime_t req_tg;
-	ktime_t req_ti;
-	ktime_t req_td;
-	ktime_t req_tc;
-#endif /*OPLUS_FEATURE_IOMONITOR*/
 
 #ifdef VENDOR_EDIT
 /*Hank.liu@PSW.BSP Kernel IO Latency  2019-03-19,Add some info in each request*/
