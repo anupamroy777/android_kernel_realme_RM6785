@@ -842,12 +842,6 @@ int __vma_adjust(struct vm_area_struct *vma, unsigned long start,
 	int remove_next = 0;
 
 	/*
-	* to avoid deadlock, ksm_remove_vma must be done before any spin_lock is
-	* acquired
-	*/
-	uksm_remove_vma(vma);
-
-	/*
 	 * Why using vm_raw_write*() functions here to avoid lockdep's warning ?
 	 *
 	 * Locked is complaining about a theoretical lock dependency, involving
@@ -870,6 +864,12 @@ int __vma_adjust(struct vm_area_struct *vma, unsigned long start,
 	vm_raw_write_begin(vma);
 	if (next)
 		vm_raw_write_begin(next);
+
+	/*
+	* to avoid deadlock, ksm_remove_vma must be done before any spin_lock is
+	* acquired
+	*/
+	uksm_remove_vma(vma);
 
 	if (next && !insert) {
 		struct vm_area_struct *exporter = NULL, *importer = NULL;
@@ -3643,13 +3643,12 @@ void exit_mmap(struct mm_struct *mm)
 		set_bit(MMF_OOM_SKIP, &mm->flags);
 		down_write(&mm->mmap_sem);
 		up_write(&mm->mmap_sem);
-	} else {
-		/*
-		* Taking write lock on mmap_sem does not harm others,
-		* but it's crucial for uksm to avoid races.
-		*/
-		down_write(&mm->mmap_sem);
 	}
+	/*
+	 * Taking write lock on mmap_sem does not harm others,
+	 * but it's crucial for uksm to avoid races.
+	 */
+	down_write(&mm->mmap_sem);
 
 	if (mm->locked_vm) {
 		vma = mm->mmap;
