@@ -53,6 +53,9 @@
 
 #ifdef CONFIG_DEBUG_FS
 
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
+#include <linux/iomonitor/iomonitor.h>
+#endif /*OPLUS_FEATURE_IOMONITOR*/
 
 struct dentry *blk_debugfs_root;
 #endif
@@ -1321,6 +1324,9 @@ out:
 	 */
 	if (ioc_batching(q, ioc))
 		ioc->nr_batch_requests--;
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
+	iomonitor_init_reqstats(rq);
+#endif /*OPLUS_FEATURE_IOMONITOR*/
 	trace_block_getrq(q, bio, op);
 	return rq;
 
@@ -2314,11 +2320,17 @@ blk_qc_t submit_bio(struct bio *bio)
 
 		if (op_is_write(bio_op(bio))) {
 			count_vm_events(PGPGOUT, count);
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
+			iomonitor_update_vm_stats(PGPGOUT, count);
+#endif /*OPLUS_FEATURE_IOMONITOR*/
 		} else {
 			if (bio_flagged(bio, BIO_WORKINGSET))
 				workingset_read = true;
 			task_io_account_read(bio->bi_iter.bi_size);
 			count_vm_events(PGPGIN, count);
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
+			iomonitor_update_vm_stats(PGPGIN, count);
+#endif /*OPLUS_FEATURE_IOMONITOR*/
 		}
 
 #ifdef CONFIG_MTK_BLOCK_TAG
@@ -2630,6 +2642,9 @@ struct request *blk_peek_request(struct request_queue *q)
 			 * not be passed by new incoming requests
 			 */
 			rq->rq_flags |= RQF_STARTED;
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
+			rq->req_td = ktime_get();
+#endif /*OPLUS_FEATURE_IOMONITOR*/
 
 			trace_block_rq_issue(q, rq);
 		}
@@ -2690,6 +2705,9 @@ struct request *blk_peek_request(struct request_queue *q)
 			break;
 		}
 	}
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
+	iomonitor_record_io_history(rq);
+#endif /*OPLUS_FEATURE_IOMONITOR*/
 	return rq;
 }
 EXPORT_SYMBOL(blk_peek_request);
@@ -2804,6 +2822,9 @@ bool blk_update_request(struct request *req, blk_status_t error,
 	int total_bytes;
 
 	trace_block_rq_complete(req, blk_status_to_errno(error), nr_bytes);
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
+	iomonitor_record_reqstats(req, nr_bytes);
+#endif /*OPLUS_FEATURE_IOMONITOR*/
 
 	if (!req->bio)
 		return false;

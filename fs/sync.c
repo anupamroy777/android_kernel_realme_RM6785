@@ -25,6 +25,11 @@
 #include <soc/oplus/oppo_healthinfo.h>
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR)
+#include <linux/iomonitor/iomonitor.h>
+#include <linux/iomonitor/iotrace.h>
+DEFINE_TRACE(syscall_sync_timeout);
+#endif /*OPLUS_FEATURE_IOMONITOR*/
 
 bool fsync_enabled = true;
 module_param(fsync_enabled, bool, 0644);
@@ -249,6 +254,10 @@ static int do_fsync(unsigned int fd, int datasync)
 	if (f.file) {
 		ret = vfs_fsync(f.file, datasync);
 		fdput(f);
+#if defined(OPLUS_FEATURE_IOMONITOR) && defined(CONFIG_IOMONITOR) && defined(OPLUS_FEATURE_HEALTHINFO)
+		iomonitor_update_fs_stats(FS_FSYNC, 1);
+		trace_syscall_sync_timeout(f.file, jiffies_to_msecs(jiffies - fsync_time));
+#endif /*OPLUS_FEATURE_IOMONITOR & OPLUS_FEATURE_HEALTHINFO*/
 		inc_syscfs(current);
 	}
 #ifdef OPLUS_FEATURE_HEALTHINFO
