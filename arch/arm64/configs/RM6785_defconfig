@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.14.282 Kernel Configuration
+# Linux/arm64 4.14.288 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -2518,7 +2518,10 @@ CONFIG_SERIAL_CORE_CONSOLE=y
 # CONFIG_HVC_DCC is not set
 # CONFIG_VIRTIO_CONSOLE is not set
 # CONFIG_IPMI_HANDLER is not set
-# CONFIG_HW_RANDOM is not set
+CONFIG_HW_RANDOM=y
+# CONFIG_HW_RANDOM_TIMERIOMEM is not set
+# CONFIG_HW_RANDOM_VIRTIO is not set
+# CONFIG_HW_RANDOM_MT67XX is not set
 
 #
 # PCMCIA character devices
@@ -2529,6 +2532,7 @@ CONFIG_SERIAL_CORE_CONSOLE=y
 CONFIG_RPMB=y
 # CONFIG_RPMB_INTF_DEV is not set
 # CONFIG_RPMB_SIM is not set
+CONFIG_RANDOM_TRUST_BOOTLOADER=y
 
 #
 # I2C support
@@ -3640,6 +3644,7 @@ CONFIG_USB_TRANCEVIBRATOR=y
 # CONFIG_USB_HSIC_USB3503 is not set
 # CONFIG_USB_HSIC_USB4604 is not set
 # CONFIG_USB_LINK_LAYER_TEST is not set
+# CONFIG_USB_CHAOSKEY is not set
 
 #
 # USB Physical Layer drivers
