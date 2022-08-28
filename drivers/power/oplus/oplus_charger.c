@@ -412,7 +412,7 @@ int oplus_ac_get_property(struct power_supply *psy,
 	if((!chip->charger_exist) && chip->ac_online ){
 		if (!check_fastchg_quit){
 			check_fastchg_quit = true;
-			queue_delayed_work(system_power_efficient_wq, &chip->fastcheck_work, OPLUS_CHG_UPDATE_INTERVAL);
+			schedule_delayed_work(&chip->fastcheck_work, OPLUS_CHG_UPDATE_INTERVAL);
 		} else {
 			check_fastchg_quit = false;
 		}
@@ -1857,7 +1857,7 @@ static void oplus_chg_show_ui_soc_decimal(struct work_struct *work)
 
 //	if(chip->calculate_decimal_time<= MAX_UI_DECIMAL_TIME) {
 		chip->calculate_decimal_time++;
-	   	queue_delayed_work(system_power_efficient_wq, &chip->ui_soc_decimal_work, msecs_to_jiffies(UPDATE_TIME * 1000));
+	   	schedule_delayed_work(&chip->ui_soc_decimal_work, msecs_to_jiffies(UPDATE_TIME * 1000));
 //	} else {
 //		oplus_chg_ui_soc_decimal_deinit();
 //	}
@@ -1976,7 +1976,7 @@ static void mmi_adapter_in_work_func(struct work_struct *work)
 static void oplus_mmi_fastchg_in(struct oplus_chg_chip *chip)
 {
 	charger_xlog_printk(CHG_LOG_CRTI, "  call\n");
-	queue_delayed_work(system_power_efficient_wq, &chip->mmi_adapter_in_work,
+	schedule_delayed_work(&chip->mmi_adapter_in_work,
 	round_jiffies_relative(msecs_to_jiffies(2000)));
 }
 
@@ -2135,7 +2135,7 @@ int oplus_chg_init(struct oplus_chg_chip *chip)
 	rc = init_ui_soc_decimal_proc(chip);
 	rc = init_charger_proc(chip);
 	/*ye.zhang add end*/
-	queue_delayed_work(system_power_efficient_wq, &chip->update_work, OPLUS_CHG_UPDATE_INIT_DELAY);
+	schedule_delayed_work(&chip->update_work, OPLUS_CHG_UPDATE_INIT_DELAY);
 	INIT_DELAYED_WORK(&chip->mmi_adapter_in_work, mmi_adapter_in_work_func);
 	chip->shell_themal = thermal_zone_get_zone_by_name("shell_back");
 	if (IS_ERR(chip->shell_themal)) {
@@ -7335,7 +7335,7 @@ static void oplus_chg_update_work(struct work_struct *work)
 	oplus_chg_kpoc_power_off_check(chip);
 	oplus_chg_other_thing(chip);
 	/* run again after interval */
-	queue_delayed_work(system_power_efficient_wq, &chip->update_work, OPLUS_CHG_UPDATE_INTERVAL);
+	schedule_delayed_work(&chip->update_work, OPLUS_CHG_UPDATE_INTERVAL);
 }
 void oplus_chg_cancel_update_work_sync(void)
 {
@@ -7352,7 +7352,7 @@ void oplus_chg_restart_update_work(void)
 		return;
 	}
 
-	queue_delayed_work(system_power_efficient_wq, &g_charger_chip->update_work, 0);
+	schedule_delayed_work(&g_charger_chip->update_work, 0);
 }
 bool oplus_chg_wake_update_work(void)
 {
@@ -7371,7 +7371,7 @@ void oplus_chg_reset_adapter(void)
 	if (!g_charger_chip) {
 		return;
 	}
-	queue_delayed_work(system_power_efficient_wq, &g_charger_chip->reset_adapter_work, 0);
+	schedule_delayed_work(&g_charger_chip->reset_adapter_work, 0);
 }
 
 void oplus_chg_kick_wdt(void)
