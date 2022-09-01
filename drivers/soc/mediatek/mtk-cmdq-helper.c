@@ -593,7 +593,7 @@ dma_addr_t cmdq_pkt_get_curr_buf_pa(struct cmdq_pkt *pkt)
 }
 EXPORT_SYMBOL(cmdq_pkt_get_curr_buf_pa);
 
-void *cmdq_pkt_get_curr_buf_va(struct cmdq_pkt *pkt)
+int *cmdq_pkt_get_curr_buf_va(struct cmdq_pkt *pkt)
 {
 	struct cmdq_pkt_buffer *buf;
 

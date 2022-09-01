@@ -232,7 +232,7 @@ dma_addr_t cmdq_pkt_get_pa_by_offset(struct cmdq_pkt *pkt, u32 offset);
 
 dma_addr_t cmdq_pkt_get_curr_buf_pa(struct cmdq_pkt *pkt);
 
-void *cmdq_pkt_get_curr_buf_va(struct cmdq_pkt *pkt);
+int *cmdq_pkt_get_curr_buf_va(struct cmdq_pkt *pkt);
 
 s32 cmdq_pkt_append_command(struct cmdq_pkt *pkt, u16 arg_c, u16 arg_b,
 	u16 arg_a, u8 s_op, u8 arg_c_type, u8 arg_b_type, u8 arg_a_type,
