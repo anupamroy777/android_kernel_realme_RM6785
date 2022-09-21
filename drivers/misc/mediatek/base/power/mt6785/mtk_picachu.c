@@ -201,15 +201,6 @@ static void picachu_apply_efuse_to_eem(enum mt_picachu_vproc_id id,
 
 	for (i = 0; i < NR_EEM_EFUSE_PER_VPROC; i++, array_idx++) {
 
-		if (p->pi_dvtfixed == PICACHU_DVTFIXED)
-			eem_set_pi_dvtfixed(*(ctrl_id + array_idx),
-							p->pi_dvtfixed);
-
-		if (!p->ptp1_efuse[i] || *(ctrl_id + array_idx) == -1)
-			continue;
-
-		eem_set_pi_efuse(*(ctrl_id + array_idx),
-				p->ptp1_efuse[i], p->loo_enabled);
 	}
 }
 
