@@ -94,6 +94,22 @@ unsigned int mtk_kbase_report_gpu_memory_usage(void)
 }
 #endif /* ENABLE_MTK_MEMINFO */
 
+#ifdef VENDOR_EDIT
+/* Wen.Luo@BSP.Kernel.Stability, 2019/04/26, Add for Process memory statistics */
+#define P2K(x) ((x) << (PAGE_SHIFT - 10))       /* Converts #Pages to KB */
+int get_gl_mem_by_pid(pid_t pid)
+{
+        ssize_t ret = 0;
+        int i = 0;
+        for (i = 0; (i < MTK_MEMINFO_SIZE) && (g_mtk_gpu_meminfo[i].pid != 0); i++) {
+                if(g_mtk_gpu_meminfo[i].pid == pid) {  //no lock protecte?
+                        return P2K(g_mtk_gpu_meminfo[i].used_pages);                                            }
+        }
+	return ret;
+}
+EXPORT_SYMBOL(get_gl_mem_by_pid);
+#endif
+
 #ifdef CONFIG_PROC_FS
 
 /* 0. For query the support command */
