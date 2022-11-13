@@ -80,7 +80,6 @@ obj-$(CONFIG_SIM_DETECT)	+= sim_detect.o
 obj-$(CONFIG_MTK_FB)		+= oplus/
 #endif
 
-obj-$(CONFIG_BATTERY_SAVER)	+= battery_saver.o
 lkdtm-$(CONFIG_LKDTM)		+= lkdtm_core.o
 lkdtm-$(CONFIG_LKDTM)		+= lkdtm_bugs.o
 lkdtm-$(CONFIG_LKDTM)		+= lkdtm_heap.o
