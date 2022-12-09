@@ -770,7 +770,7 @@ OPT_FLAGS += -mllvm -polly-reschedule=1 \
 	-mllvm -polly-loopfusion-greedy=1 \
 	-mllvm -polly-postopts=1
 else
-OPT_FLAGS += -mllvm -polly-opt-fusion=max
+OPT_FLAGS += -mllvm -polly-isl-arg=--no-schedule-serialize-sccs
 endif
 
 KBUILD_CFLAGS += $(OPT_FLAGS)
