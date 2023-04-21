@@ -78,34 +78,17 @@ endif
 # Driver version string which is returned to userspace via an ioctl
 MALI_RELEASE_NAME ?= '"r36p0-01eac0"'
 # Set up defaults if not defined by build system
-ifeq ($(CONFIG_MALI_DEBUG), y)
-    MALI_UNIT_TEST = 1
-    MALI_CUSTOMER_RELEASE ?= 0
-else
-    MALI_UNIT_TEST ?= 0
-    MALI_CUSTOMER_RELEASE ?= 1
-endif
+MALI_UNIT_TEST ?= 0
+MALI_CUSTOMER_RELEASE ?= 1
 MALI_COVERAGE ?= 0
+MALI_JIT_PRESSURE_LIMIT_BASE ?= 1
+MALI_USE_CSF ?= 0
+MALI_KERNEL_TEST_API ?= 0
 
 # Kconfig passes in the name with quotes for in-tree builds - remove them.
 
 CONFIG_MALI_PLATFORM_NAME ?= $(CONFIG_MALI_PLATFORM_THIRDPARTY_NAME)
 MALI_PLATFORM_DIR := $(shell echo $(CONFIG_MALI_PLATFORM_NAME))
-
-ifeq ($(CONFIG_MALI_CSF_SUPPORT),y)
-    MALI_JIT_PRESSURE_LIMIT_BASE = 0
-    MALI_USE_CSF = 1
-else
-    MALI_JIT_PRESSURE_LIMIT_BASE ?= 1
-    MALI_USE_CSF ?= 0
-endif
-
-
-ifneq ($(CONFIG_MALI_KUTF), n)
-    MALI_KERNEL_TEST_API ?= 1
-else
-    MALI_KERNEL_TEST_API ?= 0
-endif
 
 # Experimental features (corresponding -D definition should be appended to
 # ccflags-y below, e.g. for MALI_EXPERIMENTAL_FEATURE,
