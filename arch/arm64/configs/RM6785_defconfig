@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.14.313 Kernel Configuration
+# Linux/arm64 4.14.324 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -48,7 +48,7 @@ CONFIG_THREAD_INFO_IN_TASK=y
 CONFIG_INIT_ENV_ARG_LIMIT=32
 CONFIG_CROSS_COMPILE="aarch64-linux-android-"
 # CONFIG_COMPILE_TEST is not set
-CONFIG_LOCALVERSION="-ThunderStorm-2.4"
+CONFIG_LOCALVERSION="-ThunderStorm-2.5~homebrew"
 # CONFIG_LOCALVERSION_AUTO is not set
 CONFIG_DEFAULT_HOSTNAME="(none)"
 CONFIG_SWAP=y
@@ -1096,7 +1096,6 @@ CONFIG_HAVE_NET_DSA=y
 CONFIG_VLAN_8021Q=y
 # CONFIG_VLAN_8021Q_GVRP is not set
 # CONFIG_VLAN_8021Q_MVRP is not set
-# CONFIG_DECNET is not set
 CONFIG_LLC=y
 # CONFIG_LLC2 is not set
 # CONFIG_IPX is not set
