@@ -315,7 +315,9 @@ static void debug_power_timer_func(unsigned long data)
 	for_each_possible_cpu(cpu) {
 		cpu_freq = cpufreq_quick_get(cpu) / 1000;
 		ts = tick_get_tick_sched(cpu);
+#ifdef CONFIG_MTK_SCHED_CPULOAD 
 		sched_get_percpu_load2(cpu, 0, &load_rel, &load_abs);
+#endif
 	}
 
 	task_power_stats();
