@@ -32,6 +32,8 @@ function compile() {
 function zupload() {
 	git clone --depth=1 https://github.com/Johny8988/AnyKernel3.git AnyKernel
 	cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
+	cp out/arch/arm64/boot/dtbo.img AnyKernel
+	cp out/arch/arm64/boot/dtb.img AnyKernel
 	cd AnyKernel
 	date=$(date "+%Y-%m-%d")
 	zip -r9 ThunderStorm-lto-KERNEL-RM6785-$date.zip *
