@@ -208,6 +208,8 @@
 };
 
 &i2c7 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	status = "okay";
 	clock-frequency = <100000>;
 	bq27541-battery@55 {

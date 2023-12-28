@@ -16,6 +16,8 @@
 //#ifdef OPLUS_FEATURE_TP_BASIC
 /*Xiaofei.Gong@BSP.TP.Function, 2020/09/15, bringup add for sala touchscreen.*/
 &spi3 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	novatek@0 {
                 compatible = "novatek,nf_nt36672c";
 		reg = <0>;
@@ -74,6 +76,8 @@
 /*Xiaofei.Gong@BSP.TP.Function, 2020/09/15, bringup add for sala touchscreen.*/
 //#endif OPLUS_FEATURE_TP_BASIC
 &i2c2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	clock-frequency = <400000>;
 
 	mtk-usb@60 {
@@ -543,6 +547,8 @@
 
 // wuhui@ODM.CM.Multimedia.Audio 2020/09/08 modified for aw87339 bringup
 &i2c6 {
+	#address-cells = <1>;
+	#size-cells = <0>;
 	aw87339@58 {
 		compatible = "awinic,aw87339_pa";
 		reg = <0x58>;
@@ -560,6 +566,8 @@
 //#ifdef OPLUS_FEATURE_NFC_BRINGUP
 //LinJunBin@CONNECTIVITY.NFC.BASIC , 2020/09/19, add for : add NXP devices
 &i2c3 {
+			#address-cells = <1>;
+			#size-cells = <0>;
        status = "okay";
        nfc_nxp@28 {
                compatible = "nxp,pn544";
